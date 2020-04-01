@@ -56,3 +56,8 @@ A playbook holds a set of tasks you would like to automate
 [information on what the file contains]
 
 2. run the command ```ansible-playbook playbook.yml -f 10```
+
+## Resources
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-18-04
+https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04
+https://docs.ansible.com/ansible/latest/index.html
