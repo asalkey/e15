@@ -10,12 +10,16 @@ sudo apt install ansible
 ```
 [insert image of terminal]
 [information on what each of above lines is for]
+
 Line 1 -  updates the server and packages to the latest version
+
 Line 2 -
+
 Line 3 -
+
 Line 4 -
 
-##Creating a Playbook
+## Creating a Playbook
 
 A playbook holds a set of tasks you would like to automate
 
