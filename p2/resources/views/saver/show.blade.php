@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <form method='POST' action="{{route('calculate')}}">
+        <form method='POST' action="{{route('calculate')}}" novalidate>
             <div class='alert alert-info'>* Required fields</div>
             {{ csrf_field() }}
             @if(count($errors) > 0)
@@ -21,11 +21,11 @@
             @endif
             <div class="form-group">
                 <label>* Item Cost:</label>
-                <input type="text" class="form-control" value='{{ old("item_cost")}}' novalidate="novalidate" name="item_cost">
+                <input type="text" class="form-control" value='{{ old("item_cost")}}' name="item_cost">
             </div>
             <div class="form-group">
                 <label>* Sale Precent Off:</label>
-                <input type="number" class="form-control" value='{{ old("percent_off")}}' novalidate="novalidate" name="percent_off">
+                <input type="number" class="form-control" value='{{ old("percent_off")}}'  name="percent_off">
             </div>
             <div class="form-group">
                 <label> State Tax?</label>
