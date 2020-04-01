@@ -57,6 +57,34 @@ A playbook holds a set of tasks you would like to automate
 
 2. run the command ```ansible-playbook playbook.yml -f 10```
 
+## Adding prompts to a Playbook
+
+You may need to obtain user input.  
+
+How to add user input:
+
+```
+---
+- hosts: all
+  vars_prompt:
+
+    - name: username
+      prompt: "What is your username?"
+      private: no
+
+    - name: password
+      prompt: "What is your password?"
+
+  tasks:
+
+    - debug:
+        msg: 'Logging in as {{ username }}'
+        
+```
+
+## Adding files and changing permissions using a Playbook
+https://docs.ansible.com/ansible/latest/modules/file_module.html
+
 ## Resources
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-18-04
 https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04
