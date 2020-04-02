@@ -3,21 +3,22 @@ Ansible is a server automation tool.
 
 ## Installing Ansible on Ubuntu
 ```
+sudo apt-add-repository ppa:ansible/ansible
 sudo apt update
-sudo apt install software-properties-common
-sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 ```
-[insert image of terminal]
-[information on what each of above lines is for]
+The first line pulls in the ansible package onto the server. Second line updates all the packages and the last line installs ansible.
 
-Line 1 -  updates the server and packages to the latest version
+Once installed gointo the newly created ansible folder:
+```
+cd /etc/ansible
+```
+Copy the hosts file
+```
+cp hosts hosts.bk
+```
+This command will greate a backup of the default hosts file. A hosts file contains a list of all the servers you would like to manage using Ansible.
 
-Line 2 -
-
-Line 3 -
-
-Line 4 -
 
 ## Creating a Playbook
 
