@@ -9,15 +9,32 @@ sudo apt install ansible
 ```
 The first line pulls in the ansible package onto the server. Second line updates all the packages and the last line installs ansible.
 
-Once installed gointo the newly created ansible folder:
+Once installed go into the newly created ansible folder:
 ```
 cd /etc/ansible
 ```
-Copy the hosts file
+Rename the hosts file:
 ```
-cp hosts hosts.bk
+mv hosts hosts.bk
 ```
-This command will greate a backup of the default hosts file. A hosts file contains a list of all the servers you would like to manage using Ansible.
+This command will rename the default hosts file. A hosts file contains a list of all the servers you would like to manage using Ansible.
+
+To create a new hosts file:
+```
+touch hosts
+````
+Edit the new hosts file:
+
+```
+nano hosts
+```
+
+Add the following to the new hosts file:
+```
+[local]
+localhost ansible_connection=local
+```
+For now we only have one machine that we would like to manage.
 
 
 ## Creating a Playbook
