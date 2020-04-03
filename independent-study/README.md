@@ -1,40 +1,58 @@
 # Getting started with Ansible
 Ansible is a server automation tool.
 
-## Installing Ansible on Ubuntu
+## Installing and configuring Ansible on Ubuntu
 ```
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt update
 sudo apt install ansible
 ```
-The first line pulls in the ansible package onto the server. Second line updates all the packages and the last line installs ansible.
+The first line pulls in the Ansible package onto the server. Second line updates all the packages and the last line installs Ansible.
 
-Once installed go into the newly created ansible folder:
+Once installed go into the newly created Ansible folder:
 ```
 cd /etc/ansible
 ```
-Rename the hosts file:
+Rename the inventory file:
 ```
 mv hosts hosts.bk
 ```
-This command will rename the default hosts file. A hosts file contains a list of all the servers you would like to manage using Ansible.
+This command will rename the default inventory file that way there is a backup. An inventory file contains a list of all the servers you would like to manage using Ansible.
 
-To create a new hosts file:
+Next create a new inventory file:
 ```
 touch hosts
 ````
-Edit the new hosts file:
+Edit the new inventory file:
 
 ```
 nano hosts
 ```
 
-Add the following to the new hosts file:
+Add the following to the new inventory file:
 ```
 [local]
 localhost ansible_connection=local
 ```
-For now we only have one machine that we would like to manage.
+1. ```[local]``` refers to the group name. Group names are not a requirement but provides originization if you have multiple servers you would like to put into different groups.
+
+2. For now we only have one machine that we would like to manage. ```localhost``` is a variable name and ```ansible_connection``` is a behavorial inventory paramater that is assigned to the variable. We want to connect to our local machine so we set ```ansible_connection``` to ```local```.
+
+Now we test our connection:
+```
+ansible all -m ping
+```
+
+The following output means everything is running smoothly:
+```
+localhost | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+```
 
 
 ## Creating a Playbook
