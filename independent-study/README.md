@@ -57,41 +57,54 @@ localhost | SUCCESS => {
 
 ## Creating a Playbook
 
-A playbook holds a set of tasks you would like to automate
+A playbook holds a set of tasks you would like to automate. The example below will configure your server and deploy a laravel application.
 
- 1. create a file playbook.yml
- example:
+Go into the root directory of the server ``` cd ~ ```
+
+Create a playbook  ```touch laravel.yml```
+
+* A playbook can be named anything but must end with the .yml extension. A playbook file can also be placed anywhere on the server.
+
+Next, edit the laravel.yml file ```nano laravel.yml```
+
+Add the following:
 ```
 ---
-- hosts: webservers
-  vars:
-    http_port: 80
-    max_clients: 200
-  remote_user: root
-  tasks:
-  - name: ensure apache is at the latest version
-    yum:
-      name: httpd
-      state: latest
-  - name: write the apache config file
-    template:
-      src: /srv/httpd.j2
-      dest: /etc/httpd.conf
-    notify:
-    - restart apache
-  - name: ensure apache is running
-    service:
-      name: httpd
-      state: started
-  handlers:
-    - name: restart apache
-      service:
-        name: httpd
-        state: restarted
+- hosts: local
 ```
-[information on what the file contains]
+*hosts refers to a server listed in the inventory file. Here we can either put the group name local or the server localhost 
 
-2. run the command ```ansible-playbook playbook.yml -f 10```
+Below that  we will add some tasks to install composer which is the package manager for Laravel
+```
+  tasks:
+   - name: Download composer
+     get_url:
+      url: https://getcomposer.org/installer
+      dest: /usr/local/bin
+
+   - name: Install composer
+     command: php installer
+     args:
+      chdir: /usr/local/bin
+
+   - name: Rename composer executable
+     command: mv composer.phar composer
+     become: yes
+     args:
+      chdir: /usr/local/bin
+```
+
+*name is a brief description as to what the task is doing
+*get_url is an Ansible module the downloads files. The url paramater has the url where the file is located. The dest paramater is where we want to place the file on the server.
+*command is an ansible module that allows us  to run commands. 
+*args is a task keyword that allows us to pass additional parameters to the command module
+*chdir is a paramater that tells Ansible to run the command in a specific directory. 
+*become is a keyword that allows us to escalate privilage. This allows us to add sudo to the command we are running
+
+Next we are going to add more memory to a server because composer is a resource hog. Add the following lines:
+
+
+
 
 ## Adding prompts to a Playbook
 
