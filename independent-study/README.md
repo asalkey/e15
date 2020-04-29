@@ -178,7 +178,7 @@ Next we will want to add required modules to the server. Add the following lines
 
 ```
 
-* apt is a module that allows us to manage apt packages. The update_cache paramater is equivalent to ```apt-get update```. The pkg paramater allows us to install the packages we need.
+* apt is a module that allows us to manage apt packages. The ```update_cache``` paramater is equivalent to ```apt-get update```. The pkg paramater allows us to install the packages we need.
 
 Lastly we will enable mod_rewrite and restart the server. Add the following:
 
