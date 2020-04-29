@@ -57,7 +57,7 @@ localhost | SUCCESS => {
 
 ## Creating a Playbook
 
-A playbook holds a set of tasks you would like to automate. The example below will configure your server and deploy a laravel application.
+A playbook holds a set of tasks you would like to automate. The example below will configure your server for a Laravel application.
 
 Go into the root directory of the server ``` cd ~ ```
 
@@ -72,7 +72,7 @@ Add the following:
 ---
 - hosts: local
 ```
-*hosts refers to a server listed in the inventory file. Here we can either put the group name local or the server localhost 
+* hosts refers to a server listed in the inventory file. Here we can either put the group name local or the server localhost 
 
 Below that  we will add some tasks to install composer which is the package manager for Laravel
 ```
@@ -94,45 +94,136 @@ Below that  we will add some tasks to install composer which is the package mana
       chdir: /usr/local/bin
 ```
 
-*name is a brief description as to what the task is doing
-*get_url is an Ansible module the downloads files. The url paramater has the url where the file is located. The dest paramater is where we want to place the file on the server.
-*command is an ansible module that allows us  to run commands. 
-*args is a task keyword that allows us to pass additional parameters to the command module
-*chdir is a paramater that tells Ansible to run the command in a specific directory. 
-*become is a keyword that allows us to escalate privilage. This allows us to add sudo to the command we are running
+* name is a brief description as to what the task is doing
+
+* get_url is an Ansible module the downloads files. The ```url``` paramater has the url where the file is located. The ```dest``` paramater is where we want to place the file on the server.
+
+* command is an ansible module that allows us to run commands. 
+
+* args is a task keyword that allows us to pass additional parameters to the command module
+
+* chdir is a paramater that tells Ansible to run the command in a specific directory. 
+
+* become is a keyword that allows us to escalate privilage. This allows us to add sudo to the command we are running
 
 Next we are going to add more memory to a server because composer is a resource hog. Add the following lines:
 
+```
+   - name: Create a swap file
+     command: fallocate -l 4G /swapfile
+     become: yes
+     args:
+      chdir: ~
 
+   - name: Adjust swapfile permissions
+     become: yes
+     file:
+      path: /swapfile
+      owner: root
+      group: root
+      mode: '0600'
 
+   - name: Setup the swap space
+     command: mkswap /swapfile
+     become: yes
+     args:
+      chdir: ~
+      
+   - name: Setup the swap space
+     command: mkswap /swapfile
+     become: yes
+     args:
+      chdir: ~
 
-## Adding prompts to a Playbook
+   - name: Enable swapfile
+     command: swapon /swapfile
+     become: yes
+     args:
+       chdir: ~
 
-You may need to obtain user input.  
+   - name: Add line to ensure swapfile is always enabled
+     become: yes
+     lineinfile:
+      path: /etc/fstab
+      line: /swapfile   none    swap    sw    0   0
+      create: yes
+```
 
-How to add user input:
+* file is a module that allows us to manipulate files and file properties. The ```owner``` and ```group``` paramaters refers to the user and group that is assigned to the file or directory. The ```mode``` parameter refers to the permissions we would like to the directory or file to.
+
+* lineinfile is a module that allows us to add a line to a file. The ```path``` paramater is the file we would like to add a line to. The line paramater is the line we would like to add. The ```create``` paramter creates the file if it does not exist.
+
+Next we will want to add required modules to the server. Add the following lines below:
 
 ```
----
-- hosts: all
-  vars_prompt:
+   - name: Add PHP repository
+     command: add-apt-repository ppa:ondrej/php
+     become: yes
+     args:
+       chdir: ~
 
-    - name: username
-      prompt: "What is your username?"
-      private: no
+   - name: Update all packages
+     become: yes
+     apt:
+      update_cache: yes
 
-    - name: password
-      prompt: "What is your password?"
+   - name: Install packages
+     become: yes
+     apt:
+      pkg:
+       - php7.2-mbstring
+       - zip
+       - php7.2-xml
+       - unzip
 
-  tasks:
-
-    - debug:
-        msg: 'Logging in as {{ username }}'
-        
 ```
 
-## Adding files and changing permissions using a Playbook
-https://docs.ansible.com/ansible/latest/modules/file_module.html
+* apt is a module that allows us to manage apt packages. The update_cache paramater is equivalent to ```apt-get update```. The pkg paramater allows us to install the packages we need.
+
+Lastly we will enable mod_rewrite and restart the server. Add the following:
+
+```
+   - name: Enable mod_rewrite for URL routes
+     command: a2enmod rewrite
+     become: yes
+     args:
+       chdir: ~
+
+   - name: Restart server
+     command: service apache2 restart
+     become: yes
+     args:
+       chdir: ~
+```
+
+Now let's execute our Playbook
+
+```
+ansible-playbook laravel.yml
+```
+
+If everything is working correctly we should see no failed messages. If there are failed messages the output should tell you how to fix the issues before executing again.
+
+## Playbook gotchas
+
+Playbook files with extra whitespace, indentations, and tabs will give you an error when you  try to execute.
+
+Install the following package to help you find issues with your playbook
+
+```
+apt install ansible-lint
+```
+
+To use simply run
+
+```
+ansible-lint laravel.yml
+```
+
+This will give you an output letting you know if there is anything wrong with the file.
+
+
+
 
 ## Resources
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-18-04
