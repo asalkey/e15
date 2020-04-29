@@ -202,7 +202,7 @@ Now let's execute our Playbook
 ansible-playbook laravel.yml
 ```
 
-If everything is working correctly we should see no failed messages. If there are failed messages the output should tell you how to fix the issues before executing again.
+If everything is working correctly we should see no failed messages. If there are failed messages the output should tell you what the issues are so you can fix them before executing the playbook again.
 
 ## Playbook gotchas
 
