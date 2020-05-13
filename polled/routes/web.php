@@ -13,18 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('/', 'PollsController@index');
+	Route::post('/poll', 'PollsController@store');
+	Route::get('/poll/create', 'PollsController@create');
+	Route::get('/poll/{id}/edit', 'PollsController@edit');
+	Route::get('/poll/{id}', 'PollsController@show');
+	Route::delete('/user/poll/delete', 'PollsController@destroy');
+
+	Route::get('/result/{id}', 'ResultsController@show');
+	Route::post('/result', 'ResultsController@store');
+	
+	Route::get('/user/polls', 'UserController@showPolls');
+	Route::get('/user/profile', 'UserController@showProfile');
+	Route::put('/user/profile/edit', 'UserController@updateProfile');
 });
 
-Route::get('/polls', 'PollsController@index');
-Route::post('/polls', 'PollsController@create');
-Route::get('/polls/new', 'PollsController@new');
-Route::get('/polls/{id}/edit', 'PollsController@edit');
-Route::get('/polls/{id}', 'PollsController@show');
-Route::put('/polls', 'PollsController@update');
-Route::delete('/polls/{id}', 'PollsController@destroy');
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

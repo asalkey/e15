@@ -1,0 +1,52 @@
+header{ 
+	margin-bottom: 2%;
+}
+
+nav{
+	padding:2% !important;
+}
+
+.branding h1 {
+	text-shadow: 3px 2px #00C3FF;
+	color: white;
+	padding:1%;
+}
+
+.loggedin h4{
+	text-shadow: 3px 2px #00C3FF;
+	color:#333;
+	font-size:35px;
+	font-weight:bold;
+	padding:1%;
+}
+
+.loggedin ul{
+	list-style:none;
+}
+
+.branding img{
+	float:left;
+}
+
+header .menu{
+	list-style:none;
+}
+
+header .menu li{
+	display:inline-block;
+	padding: 1%;
+}
+
+header .menu li:not(:last-child){
+	border-right: thin solid white;
+}
+
+.loggedin header .menu a{
+	color:white;
+}
+
+.loggedin .box{
+	border: solid thin coral;
+	padding: 4%;
+	background: floralwhite;
+}

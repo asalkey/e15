@@ -11,7 +11,7 @@ class Poll extends Model
         return $this->hasMany('App\Result');
     }
     
-    public function poll()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }

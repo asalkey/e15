@@ -23,7 +23,7 @@ class PollsSeeder extends Seeder
             $options = $faker->words(4, false);
             $poll->options = json_encode($options);
             
-            $poll->ismultiple = ($i % 2) ? true : false;
+            $poll->ismultiple = false;
 
             $poll->save();
         }
