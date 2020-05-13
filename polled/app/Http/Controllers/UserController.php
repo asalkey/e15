@@ -10,7 +10,7 @@ use App\User;
 class UserController extends Controller
 {
     public function showPolls(){
-		$user = Auth::user();
+	$user = Auth::user();
 	
         $polls = Poll::where('user_id', '=', $user->id)->get();
 
@@ -20,7 +20,7 @@ class UserController extends Controller
     }
     
     public function showProfile(){
-		$user = Auth::user();
+	$user = Auth::user();
 		
         return view('user.profile')->with([
             'user' => $user
