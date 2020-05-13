@@ -5,7 +5,7 @@
 		<div class="col-3"><h4>Poll</h4></div>
 		<div class="col-9 box">
 			<p>{{$poll->question}}</p>
-			<form method="post" action="/e15/polled/public/result">
+			<form method="post" action="{{url('/result')}}">
 				{{csrf_field()}}
 				@foreach(json_decode($poll->options,true) as $option)
 					<div class="row">

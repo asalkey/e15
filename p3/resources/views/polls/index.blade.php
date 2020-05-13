@@ -9,7 +9,7 @@
 		<ul>
 			@foreach($polls as $poll)
 			<li>
-				<a class='book' href='/e15/polled/public/poll/{{ $poll->id }}'>
+				<a href="{{url('/poll',['id'=>$poll->id])}}">
 				   {{ $poll->question}}
 				</a>
 			</li>
