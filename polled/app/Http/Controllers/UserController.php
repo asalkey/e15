@@ -29,18 +29,18 @@ class UserController extends Controller
     
     public function updateProfile(Request $request){
 		
-		$user = Auth::user();
-		$profile = User::where('id', '=', $user->id)->first();
+	$user = Auth::user();
+	$profile = User::where('id', '=', $user->id)->first();
 		
-		$request->validate([
-			'name' => 'required|min:1',
-			'email' => 'required|email',
-		]);
+	$request->validate([
+		'name' => 'required|min:1',
+		'email' => 'required|email',
+	]);
 		
-		$profile->name = $request->name;
-		$profile->email = $request->email;
+	$profile->name = $request->name;
+	$profile->email = $request->email;
 		 
-		$profile->save();
+	$profile->save();
 		
         return redirect("/user/profile")->with([
             'flash-alert' => 'Your profile has been updated'
