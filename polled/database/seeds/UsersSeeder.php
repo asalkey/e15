@@ -13,7 +13,7 @@ class UsersSeeder extends Seeder
     public function run()
     {
         $user = User::updateOrCreate(
-            ['email' => 'andreasalkey@gmail.com', 'name' => 'Andrea S'],
+            ['email' => 'andreasalkey@nope.com', 'name' => 'Andrea S'],
             ['password' => Hash::make('helloworld')
         ]);
 

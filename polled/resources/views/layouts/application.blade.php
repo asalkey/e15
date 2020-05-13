@@ -36,8 +36,8 @@
 			</ul>
 		@else
 			<ul class="menu col">
-				  <li><a class="btn btn-outline-warning" href="{{ url('/login') }}">Login</a></li>
-				  <li><a class="btn btn-outline-warning" href="{{ url('/register') }}">Register </a></li>
+				  <li><a dusk='login' class="btn btn-outline-warning" href="{{ url('/login') }}">Login</a></li>
+				  <li><a dusk='register' class="btn btn-outline-warning" href="{{ url('/register') }}">Register </a></li>
 			</ul>
 		@endif
 	</nav>
